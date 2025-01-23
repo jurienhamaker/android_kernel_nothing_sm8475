@@ -170,3 +170,6 @@ arch/arm/boot/dts/vendor
 
 # Documentation toolchain
 sphinx_*/
+
+# KernelSU Next
+KernelSU_Next
