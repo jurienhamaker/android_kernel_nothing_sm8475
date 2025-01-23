@@ -398,7 +398,7 @@ override CROSS_COMPILE_ARM32	:= /mnt/Programming/android_kernel/arm-eabi-4.8/arm
 override LLVM := 1
 override LLVM_IAS := 1
 override CLANG_TRIPLE := aarch64-linux-gnu
-override LLVM_PATH := /mnt/Programming/android_kernel/LLVM-19.1.3-Linux-X64/bin/
+override LLVM_PATH := /mnt/Programming/android_kernel/LLVM-19.1.7-Linux-X64/bin/
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
