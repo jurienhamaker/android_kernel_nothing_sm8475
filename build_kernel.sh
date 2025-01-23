@@ -1,6 +1,6 @@
 #!/bin/bash
-export KERNELDIR=`readlink -f .`
-export RAMFS_SOURCE=`readlink -f $KERNELDIR/ramdisk`
+export KERNELDIR=$(readlink -f .)
+export RAMFS_SOURCE=$(readlink -f $KERNELDIR/ramdisk)
 export PARTITION_SIZE=134217728
 
 export OS="12.0.0"
@@ -14,7 +14,7 @@ RAMFS_TMP="/tmp/arter97-pong-ramdisk"
 echo "ramfs_tmp = $RAMFS_TMP"
 cd $KERNELDIR
 
-if [[ "${1}" == "skip" ]] ; then
+if [[ "${1}" == "skip" ]]; then
 	echo "Skipping Compilation"
 else
 	echo "Compiling kernel"
@@ -41,19 +41,19 @@ cd $KERNELDIR
 rm -rf $RAMFS_TMP/tmp/*
 
 cd $RAMFS_TMP
-find . | fakeroot cpio -H newc -o | lz4 -l > $RAMFS_TMP.cpio.lz4
+find . | fakeroot cpio -H newc -o | lz4 -l >$RAMFS_TMP.cpio.lz4
 ls -lh $RAMFS_TMP.cpio.lz4
 cd $KERNELDIR
 
 echo "Making new boot image"
-mkbootimg.py \
-    --kernel $KERNELDIR/arch/arm64/boot/Image.gz \
-    --ramdisk $RAMFS_TMP.cpio.lz4 \
-    --pagesize 4096 \
-    --os_version     $OS \
-    --os_patch_level $SPL \
-    --header_version 4 \
-    -o $KERNELDIR/boot.img
+mkbootimg \
+	--kernel $KERNELDIR/arch/arm64/boot/Image.gz \
+	--ramdisk $RAMFS_TMP.cpio.lz4 \
+	--pagesize 4096 \
+	--os_version $OS \
+	--os_patch_level $SPL \
+	--header_version 4 \
+	-o $KERNELDIR/boot.img
 
 GENERATED_SIZE=$(stat -c %s boot.img)
 if [[ $GENERATED_SIZE -gt $PARTITION_SIZE ]]; then
@@ -61,7 +61,7 @@ if [[ $GENERATED_SIZE -gt $PARTITION_SIZE ]]; then
 	exit 1
 fi
 
-ln -f boot.img arter97-kernel-$(cat version)-boot.img
+ln -f boot.img arter97-kernel-$(cat version)-ksu-next-boot.img
 
 echo "done"
 ls -al boot.img
