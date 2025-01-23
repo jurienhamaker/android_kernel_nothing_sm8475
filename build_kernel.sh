@@ -9,7 +9,7 @@ export SPL="2023-08"
 echo "kerneldir = $KERNELDIR"
 echo "ramfs_source = $RAMFS_SOURCE"
 
-RAMFS_TMP="/tmp/arter97-pong-ramdisk"
+RAMFS_TMP="/tmp/yugen-pong-ramdisk"
 
 echo "ramfs_tmp = $RAMFS_TMP"
 cd $KERNELDIR
@@ -61,7 +61,7 @@ if [[ $GENERATED_SIZE -gt $PARTITION_SIZE ]]; then
 	exit 1
 fi
 
-ln -f boot.img arter97-kernel-$(cat version)-ksu-next-boot.img
+ln -f boot.img yugen-kernel-$(cat version)-ksu-next-boot.img
 
 echo "done"
 ls -al boot.img
